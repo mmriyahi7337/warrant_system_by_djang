@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles.css' %} ">
+
+    <title>استعلام گارانتی</title>
+</head>
+<body>
+
+
+
+<div class="pra prdc prdoc">
+<div class="pdm">
+    <h1 style="text-align: center ; color:#555555" >استعلام گارانتی</h1>
+    <form method="post">
+        {% csrf_token %}
+    <div class="row">
+        <input name="serial"type="text"class="formcc"style="height: 60px;width: 600px;direction: rtl;"placeholder="شماره سریال" required>
+    </div>
+    <div class="row"></div>
+    <div class="row">
+        <input type="submit" class="btn btn-warning" style="height: 60px; margin-top: 4%; margin-left: 40%; font-size: 25px;" value="استعلام">
+    </div>
+</form>
+</div>
+</div>
+<br>
+<div class="container containerNewsletterPro">
+    <div class="row">
+        <div class="container main clearfix">
+         <h1 class="cate tit" align="right">استعلام گارانتی محصول درخواستی</h1>
+           <br>
+            {% if cam  and cam is not -1%}
+                <p align="right"> دستگاه شما از تاریخ {{ cam.Startdayofwarranty }} تا تاریخ {{ cam.Enddateofwarranty }}  دارای گارانتی می باشد</p>
+            {% endif %}
+            {% if  cam == -1 %}
+                <h2 align="right"><strong>سریال وارد شده معتبر نمی باشد</strong>
+                    </h2>
+            <p align="right">
+                <strong>
+                    اصالت این محصول مورد تایید نمی باشد.با فروشنده کالا تماس حاصل فرمایید
+                </strong>
+            </p>
+            {% endif %}
+            &nbsp;
+            &nbsp;
+            <br>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
