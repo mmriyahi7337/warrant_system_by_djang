@@ -3,10 +3,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.template import loader, RequestContext
 import django_excel as excel
+from tablib import Dataset
+
 
 # Create your views here.
-
-
+from onlypage.admin import Camerapost
 from .models import Camera
 
 
@@ -28,44 +29,17 @@ def index(request):
     return HttpResponse(template.render(request=request))
 
 
-class UploadFileForm(forms.Form):
-    file = forms.FileField()
+def simple_upload(request):
+        if request.method == 'POST':
+            person_resource = Camerapost()
+            dataset = Dataset()
+            new_persons = request.FILES['myfile']
 
+            imported_data = dataset.load(new_persons.read())
+            result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
 
-def upload(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            filehandle = request.FILES['file']
-            return excel.make_response(filehandle.get_sheet(), "csv",
-                                       file_name="download")
-    else:
-        form = UploadFileForm()
-    return render(
-        request,
-        'upload_form.html',
-        {
-            'form': form,
-            'title': 'Excel file upload and download example',
-            'header': ('فایل اکسل خود را وارد کنید:')
-        })
+            if not result.has_errors():
+                person_resource.import_data(imported_data, dry_run=False)  # Actually import now
 
+        return render(request, 'upload_form.html')گ
 
-def import_sheet(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.POST,
-                              request.FILES)
-        if form.is_valid():
-            request.FILES['file'].save_to_database(
-                name_columns_by_row=100,
-                model=Camera,
-                mapdict=['id', 'name', 'Startdayofwarranty','Enddateofwarranty','Barcode'])
-            return HttpResponse("OK")
-        else:
-            return HttpResponseBadRequest()
-    else:
-        form = UploadFileForm()
-    return render(
-        request,
-        'upload_form.html',
-        {'form': form})

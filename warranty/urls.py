@@ -20,6 +20,6 @@ from onlypage import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
-    path('import/',views.import_sheet, name='import'),
+    path('import/',views.simple_upload, name='import'),
 
 ]

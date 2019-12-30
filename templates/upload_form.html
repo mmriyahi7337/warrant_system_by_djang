@@ -11,12 +11,12 @@
         </p>
     {% endif %}
 
-    <form action="" enctype="multipart/form-data"  method="post">
-        <table>
-            {{ form.as_table }}
-        </table>
-        {% csrf_token %}
-        <input type="submit" value="Submit">
-    </form>
+   {% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+  </form>
+{% endblock %}
 </body>
 </html>

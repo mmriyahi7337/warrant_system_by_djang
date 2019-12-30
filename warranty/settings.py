@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'onlypage.apps.OnlypageConfig',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,4 @@ STATICFILES_DIRS = [
 ]
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
+IMPORT_EXPORT_USE_TRANSACTIONS = True
